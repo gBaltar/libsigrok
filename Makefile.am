@@ -309,6 +309,12 @@ src_libdrivers_la_SOURCES += \
 	src/hardware/conrad-digi-35-cpu/protocol.c \
 	src/hardware/conrad-digi-35-cpu/api.c
 endif
+if HW_CT_LAB
+src_libdrivers_la_SOURCES += \
+	src/hardware/ct-lab/protocol.h \
+	src/hardware/ct-lab/protocol.c \
+	src/hardware/ct-lab/api.c
+endif
 if HW_DCTTECH_USBRELAY
 src_libdrivers_la_SOURCES += \
 	src/hardware/dcttech-usbrelay/protocol.h \
