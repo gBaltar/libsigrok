@@ -27,9 +27,37 @@
 
 #define LOG_PREFIX "ct-lab"
 
+#define SERIALCOMM "38400/8n1"
+#define SERIAL_WRITE_TIMEOUT_MS 50
+#define MAX_NUM_MODULES 8
+#define MAX_BUFFERED_LINES 16
+#define MAX_LINE_LENGTH 32
+
+/* Supported modules */
+enum {
+	CTLAB_DCG = 1,
+	CTLAB_EDL,
+};
+
+struct ctlab_module {
+	int module_type;
+	int ct_lab_channel;
+	int sr_start_channel;
+	char module_name[16];
+};
+
 struct dev_context {
+    struct ctlab_module modules[MAX_NUM_MODULES];
+    int num_modules;
+	struct sr_sw_limits limits;
+    uint64_t cur_samplerate;
+	int64_t acq_start_us;
+	int64_t num_samples;
+	char remaining[MAX_LINE_LENGTH];
 };
 
 SR_PRIV int ct_lab_receive_data(int fd, int revents, void *cb_data);
+
+double ct_lab_send_cmd(const struct sr_dev_inst *sdi, int ct_lab_module, const char *cmd, int ret_subchannel);
 
 #endif
